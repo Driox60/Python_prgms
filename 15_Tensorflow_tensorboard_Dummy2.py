@@ -41,9 +41,11 @@ init = tf.global_variables_initializer()
 sess.run(init)  
 for i in range (500):
     sess.run([train, cost], feed_dict={x: x_train, y_prim: y_train})
-#    summary = sess.run(merged_summary_op, {x: x_train, y_prim: y_train})
-    a_found, b_found, curr_cost = sess.run([a, b, cost], feed_dict={x: x_train, y_prim: y_train}) 
+    a_found, b_found, curr_cost, summary = sess.run([a, b, cost, merged_summary_op], feed_dict={x: x_train, y_prim: y_train}) 
+    writer.add_summary(summary)
+    writer.flush()
     print("iteration :", i, "a: ", a_found, "b: ", b_found, "cost: ", curr_cost)
+    
 
 writer.close()
 
